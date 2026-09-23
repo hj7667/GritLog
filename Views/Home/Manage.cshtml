@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "습관 관리";
+
+    // TODO(Phase 2): IEnumerable<Habit> 모델로 교체
+    var habits = new[] {
+        new { Id = 1, Name = "런닝 30분",   Created = new DateTime(2026, 8, 1),  Active = true },
+        new { Id = 2, Name = "스쿼트 50개", Created = new DateTime(2026, 8, 12), Active = true },
+        new { Id = 3, Name = "플랭크 3분",  Created = new DateTime(2026, 9, 2),  Active = true },
+        new { Id = 4, Name = "줄넘기 500개", Created = new DateTime(2026, 7, 20), Active = false },
+    };
+}
+
+<div class="gl-page-head">
+    <div>
+        <div class="gl-eyebrow">전체 @(habits.Length)개</div>
+        <h1 class="gl-title">습관 관리</h1>
+    </div>
+    <button class="gl-btn gl-btn-primary" data-bs-toggle="modal" data-bs-target="#habitModal">+ 습관 추가</button>
+</div>
+
+<div class="gl-card" style="padding:0">
+    @if (habits.Length == 0)
+    {
+        <div class="gl-empty" style="margin:22px">등록된 습관이 없어.</div>
+    }
+    else
+    {
+        <div class="gl-table-wrap">
+            <table class="gl-table">
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th class="gl-hide-sm">등록일</th>
+                        <th>상태</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var h in habits)
+                    {
+                        <tr>
+                            <td class="gl-name">@h.Name</td>
+                            <td class="gl-hide-sm">@h.Created.ToString("yyyy.MM.dd")</td>
+                            <td>
+                                <span class="gl-badge @(h.Active ? "gl-badge-on" : "gl-badge-off")">
+                                    @(h.Active ? "진행 중" : "쉬는 중")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="gl-actions">
+                                    <button type="button" class="gl-btn gl-btn-ghost gl-btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#habitModal"
+                                            data-edit-id="@h.Id" data-edit-name="@h.Name">수정</button>
+                                    <form asp-action="Delete" asp-route-id="@h.Id" method="post"
+                                          onsubmit="return confirm('삭제하면 기록도 같이 지워져. 괜찮아?');">
+                                        <button type="submit" class="gl-btn gl-btn-danger gl-btn-sm">삭제</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

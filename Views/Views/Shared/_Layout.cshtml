@@ -14,14 +14,14 @@
 <body>
     <header class="gl-nav">
         <div class="container gl-nav-inner">
-            <a class="gl-brand" asp-controller="Home" asp-action="Index">
+            <a class="gl-brand" asp-controller="Habit" asp-action="Index">
                 <span class="gl-brand-mark">G</span>
                 <span class="gl-brand-text">GritLog</span>
             </a>
             <nav class="gl-links">
-                <a class="gl-link @(action == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">대시보드</a>
-                <a class="gl-link @(action == "Manage" ? "active" : "")" asp-controller="Home" asp-action="Manage">습관 관리</a>
-                <a class="gl-link @(action == "Stats" ? "active" : "")" asp-controller="Home" asp-action="Stats">통계</a>
+                <a class="gl-link @(action == "Index" ? "active" : "")" asp-controller="Habit" asp-action="Index">대시보드</a>
+                <a class="gl-link @(action == "Manage" ? "active" : "")" asp-controller="Habit" asp-action="Manage">습관 관리</a>
+                <a class="gl-link @(action == "Stats" ? "active" : "")" asp-controller="Habit" asp-action="Stats">통계</a>
             </nav>
         </div>
     </header>

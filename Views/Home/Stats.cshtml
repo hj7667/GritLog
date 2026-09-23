@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "통계";
+
+    // TODO(Phase 4): GetStats 결과로 교체
+    var stats = new[] {
+        new { Name = "플랭크 3분",  Rate = 90 },
+        new { Name = "런닝 30분",   Rate = 83 },
+        new { Name = "스쿼트 50개", Rate = 67 },
+        new { Name = "스트레칭",    Rate = 45 },
+    };
+}
+
+<div class="gl-page-head">
+    <div>
+        <div class="gl-eyebrow">@DateTime.Today.ToString("yyyy년 M월")</div>
+        <h1 class="gl-title">습관별 달성률</h1>
+    </div>
+</div>
+
+<section class="gl-dash">
+    <div class="gl-card">
+        <div class="gl-card-head">
+            <h2 class="gl-card-title">순위</h2>
+            <span class="gl-card-sub">이번 달 기준</span>
+        </div>
+        <ul class="gl-rate-list">
+            @foreach (var s in stats)
+            {
+                <li>
+                    <div class="gl-rate-row"><span>@s.Name</span><b>@s.Rate%</b></div>
+                    <div class="gl-progress"><span style="width:@(s.Rate)%"></span></div>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="gl-card">
+        <div class="gl-card-head">
+            <h2 class="gl-card-title">비교 차트</h2>
+        </div>
+        <div class="gl-chart-box">
+            <canvas id="rateChart"></canvas>
+        </div>
+    </div>
+</section>

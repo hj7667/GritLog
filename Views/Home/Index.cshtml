@@ -1,8 +1,99 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "대시보드";
+
+    // TODO(Phase 2~3): ViewModel로 교체. 지금은 모양 잡기용 가짜 데이터
+    var habits = new[] {
+        new { Id = 1, Name = "런닝 30분",   Done = true,  Streak = 12 },
+        new { Id = 2, Name = "스쿼트 50개", Done = false, Streak = 4 },
+        new { Id = 3, Name = "플랭크 3분",  Done = true,  Streak = 21 },
+        new { Id = 4, Name = "스트레칭",    Done = false, Streak = 0 },
+    };
+    var monthRate = 72;
+    var bestStreak = 21;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="gl-page-head">
+    <div>
+        <div class="gl-eyebrow">@DateTime.Today.ToString("yyyy년 M월 d일 dddd")</div>
+        <h1 class="gl-title">오늘도 한 칸 채워볼까</h1>
+    </div>
+    <button class="gl-btn gl-btn-primary" data-bs-toggle="modal" data-bs-target="#habitModal">+ 습관 추가</button>
 </div>
+
+<!-- 통계 카드 -->
+<section class="gl-stat-grid">
+    <div class="gl-card">
+        <div class="gl-stat-label">오늘 완료</div>
+        <div class="gl-stat-value"><span id="todayDone">0</span><small>/ <span id="todayTotal">0</span></small></div>
+        <div class="gl-progress"><span id="todayBar" style="width:0%"></span></div>
+    </div>
+    <div class="gl-card">
+        <div class="gl-stat-label">이번 달 달성률</div>
+        <div class="gl-stat-value">@monthRate<small>%</small></div>
+        <div class="gl-progress"><span style="width:@(monthRate)%"></span></div>
+    </div>
+    <div class="gl-card">
+        <div class="gl-stat-label">최장 연속기록</div>
+        <div class="gl-stat-value">@bestStreak<small>일</small></div>
+        <div class="gl-stat-note">플랭크 3분</div>
+    </div>
+</section>
+
+<section class="gl-dash">
+    <!-- 오늘 체크리스트 -->
+    <div class="gl-card">
+        <div class="gl-card-head">
+            <h2 class="gl-card-title">오늘 체크</h2>
+            <span class="gl-card-sub">누르면 바로 저장</span>
+        </div>
+
+        @if (habits.Length == 0)
+        {
+            <div class="gl-empty">아직 습관이 없어. 오른쪽 위에서 하나 추가해봐.</div>
+        }
+        else
+        {
+            <ul class="gl-checklist">
+                @foreach (var h in habits)
+                {
+                    <li>
+                        <label class="gl-check-item @(h.Done ? "done" : "")" data-id="@h.Id">
+                            <input type="checkbox" @(h.Done ? "checked" : "") />
+                            <span class="gl-check-box">
+                                <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5" /></svg>
+                            </span>
+                            <span class="gl-check-name">@h.Name</span>
+                            <span class="gl-streak @(h.Streak >= 7 ? "hot" : "")">
+                                @(h.Streak > 0 ? $"🔥 {h.Streak}일" : "시작 전")
+                            </span>
+                        </label>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <!-- 잔디밭 -->
+    <div class="gl-card">
+        <div class="gl-card-head">
+            <h2 class="gl-card-title">잔디밭</h2>
+            <span class="gl-card-sub">최근 6개월</span>
+        </div>
+
+        <div class="gl-heatmap-wrap">
+            <div class="gl-heatmap">
+                <div class="gl-heat-days">
+                    <span></span>
+                    <span></span><span>월</span><span></span><span>수</span><span></span><span>금</span><span></span>
+                </div>
+                <div class="gl-heat-grid" id="heatmapGrid"></div>
+            </div>
+        </div>
+
+        <div class="gl-legend">
+            <span>적음</span>
+            <i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i>
+            <span>많음</span>
+        </div>
+    </div>
+</section>

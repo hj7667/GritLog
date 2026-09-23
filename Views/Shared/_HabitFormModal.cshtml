@@ -1,0 +1,40 @@
+<!-- 습관 등록/수정 공용 모달 -->
+<div class="modal fade" id="habitModal" tabindex="-1" aria-labelledby="habitModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content gl-modal">
+            <form id="habitForm" method="post" action="/Home/Create">
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="habitId" name="Id" />
+
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="habitModalTitle">새 습관 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                </div>
+
+                <div class="modal-body">
+                    <label class="gl-label" for="habitName">습관 이름</label>
+                    <input class="gl-input" id="habitName" name="Name" maxlength="50"
+                           placeholder="예: 런닝 30분" autocomplete="off" required />
+                    <span class="field-validation-error" data-valmsg-for="Name"></span>
+
+                    <div class="gl-suggest">
+                        <button type="button" class="gl-chip">런닝 30분</button>
+                        <button type="button" class="gl-chip">스쿼트 50개</button>
+                        <button type="button" class="gl-chip">플랭크 3분</button>
+                        <button type="button" class="gl-chip">스트레칭 10분</button>
+                    </div>
+
+                    <div class="form-check form-switch mt-4">
+                        <input class="form-check-input" type="checkbox" id="habitActive" name="IsActive" value="true" checked />
+                        <label class="form-check-label" for="habitActive">활성화 (오늘 체크리스트에 표시)</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="gl-btn gl-btn-ghost" data-bs-dismiss="modal">취소</button>
+                    <button type="submit" class="gl-btn gl-btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

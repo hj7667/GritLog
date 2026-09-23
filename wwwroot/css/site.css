@@ -1,31 +1,375 @@
-html {
-  font-size: 14px;
+/* =========================================================
+   GritLog - 스타일 껍데기
+   Bootstrap 5(기본 템플릿 포함) 위에 덮어쓰는 커스텀 스타일
+   ========================================================= */
+
+:root {
+  --bg: #f5f6f2;
+  --surface: #ffffff;
+  --ink: #171a16;
+  --muted: #6c7368;
+  --line: #e3e6de;
+
+  --accent: #2b8a3e;
+  --accent-strong: #1e6b2f;
+  --accent-soft: #e8f5eb;
+
+  --fire: #f76707;
+  --fire-soft: #fff1e6;
+  --danger: #e03131;
+
+  /* 잔디밭 단계 (0 = 기록 없음, 4 = 가장 진함) */
+  --lv0: #e9ece6;
+  --lv1: #b2e2bd;
+  --lv2: #69c783;
+  --lv3: #2f9e4f;
+  --lv4: #1a5e2c;
+
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(23, 26, 22, .04), 0 4px 16px rgba(23, 26, 22, .04);
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
+html, body { background: var(--bg); }
 
 body {
-  margin-bottom: 60px;
+  color: var(--ink);
+  font-family: "Pretendard", system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+main { flex: 1; }
+a { color: inherit; }
+
+/* ---------- 상단 네비게이션 ---------- */
+.gl-nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.gl-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: 16px;
+}
+.gl-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -.02em;
+  text-decoration: none;
+}
+.gl-brand:hover { color: var(--ink); }
+.gl-brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: .95rem;
+}
+.gl-links { display: flex; gap: 4px; }
+.gl-link {
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .93rem;
+  white-space: nowrap;
+}
+.gl-link:hover { background: var(--bg); color: var(--ink); }
+.gl-link.active { background: var(--accent-soft); color: var(--accent-strong); }
+
+/* ---------- 페이지 헤더 ---------- */
+.gl-page { padding: 32px 16px 56px; }
+.gl-page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.gl-eyebrow { color: var(--muted); font-size: .85rem; font-weight: 600; margin-bottom: 4px; }
+.gl-title { font-size: 1.75rem; font-weight: 800; letter-spacing: -.03em; margin: 0; }
+
+/* ---------- 버튼 ---------- */
+.gl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: .92rem;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .15s, transform .05s;
+}
+.gl-btn:active { transform: translateY(1px); }
+.gl-btn-primary { background: var(--accent); color: #fff; }
+.gl-btn-primary:hover { background: var(--accent-strong); color: #fff; }
+.gl-btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+.gl-btn-ghost:hover { background: var(--bg); color: var(--ink); }
+.gl-btn-danger { background: transparent; color: var(--danger); border: 1px solid #f5d0d0; }
+.gl-btn-danger:hover { background: #fff5f5; }
+.gl-btn-sm { padding: 6px 12px; font-size: .85rem; border-radius: 10px; }
+
+/* ---------- 카드 ---------- */
+.gl-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  min-width: 0;
+}
+.gl-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.gl-card-title { font-size: 1.02rem; font-weight: 800; letter-spacing: -.02em; margin: 0; }
+.gl-card-sub { color: var(--muted); font-size: .85rem; }
+
+/* ---------- 통계 카드 ---------- */
+.gl-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.gl-stat-label { color: var(--muted); font-size: .85rem; font-weight: 600; }
+.gl-stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+  margin-top: 6px;
+}
+.gl-stat-value small { font-size: 1rem; color: var(--muted); font-weight: 700; margin-left: 3px; }
+.gl-stat-note { color: var(--muted); font-size: .85rem; margin-top: 10px; }
+
+.gl-progress {
+  height: 6px;
+  background: var(--lv0);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.gl-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width .3s ease;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* ---------- 대시보드 2단 레이아웃 ---------- */
+.gl-dash {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 16px;
+  align-items: start;
+}
+
+/* ---------- 오늘 체크리스트 ---------- */
+.gl-checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.gl-check-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s, border-color .15s;
+}
+.gl-check-item:hover { background: #fafbf8; }
+.gl-check-item input { position: absolute; opacity: 0; pointer-events: none; }
+.gl-check-item input:focus-visible + .gl-check-box { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gl-check-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 2px solid #cfd4c9;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.gl-check-box svg { width: 14px; height: 14px; opacity: 0; transform: scale(.6); transition: all .15s; }
+.gl-check-name { flex: 1; font-weight: 600; min-width: 0; }
+
+.gl-check-item.done { background: var(--accent-soft); border-color: #c4e6cc; }
+.gl-check-item.done .gl-check-box { background: var(--accent); border-color: var(--accent); }
+.gl-check-item.done .gl-check-box svg { opacity: 1; transform: scale(1); }
+.gl-check-item.done .gl-check-name { color: var(--accent-strong); }
+
+.gl-streak {
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: var(--bg);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.gl-streak.hot { background: var(--fire-soft); color: var(--fire); }
+
+/* ---------- 잔디밭 ---------- */
+.gl-heatmap-wrap { overflow-x: auto; padding-bottom: 6px; }
+.gl-heatmap {
+  --cell: 13px;
+  --gap: 3px;
+  display: inline-flex;
+  gap: 6px;
+}
+.gl-heat-days,
+.gl-heat-grid {
+  display: grid;
+  grid-template-rows: 18px repeat(7, var(--cell));
+  gap: var(--gap);
+}
+.gl-heat-days span { font-size: .7rem; color: var(--muted); line-height: var(--cell); padding-right: 2px; }
+.gl-heat-grid { grid-auto-flow: column; grid-auto-columns: var(--cell); }
+.gl-heat-month { font-size: .7rem; color: var(--muted); white-space: nowrap; line-height: 18px; }
+.gl-cell {
+  display: block;
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 3px;
+  background: var(--lv0);
+}
+.gl-cell.future { visibility: hidden; }
+.gl-cell[data-level="1"], .gl-legend i[data-level="1"] { background: var(--lv1); }
+.gl-cell[data-level="2"], .gl-legend i[data-level="2"] { background: var(--lv2); }
+.gl-cell[data-level="3"], .gl-legend i[data-level="3"] { background: var(--lv3); }
+.gl-cell[data-level="4"], .gl-legend i[data-level="4"] { background: var(--lv4); }
+.gl-cell:hover { outline: 2px solid rgba(23, 26, 22, .35); outline-offset: 1px; }
+
+.gl-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: .75rem;
+  color: var(--muted);
+}
+.gl-legend i { width: 12px; height: 12px; border-radius: 3px; background: var(--lv0); display: inline-block; }
+.gl-legend span { margin: 0 4px; }
+
+/* ---------- 목록 테이블 (습관 관리) ---------- */
+.gl-table-wrap { overflow-x: auto; }
+.gl-table { width: 100%; border-collapse: collapse; }
+.gl-table th {
+  text-align: left;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.gl-table td { padding: 16px 22px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.gl-table tr:last-child td { border-bottom: 0; }
+.gl-table tbody tr:hover { background: #fafbf8; }
+.gl-table .gl-name { font-weight: 700; }
+.gl-table .gl-actions { display: flex; gap: 6px; justify-content: flex-end; }
+.gl-table .gl-actions form { margin: 0; }
+
+.gl-badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.gl-badge-on { background: var(--accent-soft); color: var(--accent-strong); }
+.gl-badge-off { background: var(--bg); color: var(--muted); }
+
+/* ---------- 통계 상세 ---------- */
+.gl-rate-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.gl-rate-row { display: flex; justify-content: space-between; font-size: .92rem; font-weight: 600; }
+.gl-rate-row b { font-weight: 800; }
+.gl-rate-list .gl-progress { margin-top: 6px; height: 8px; }
+.gl-chart-box { position: relative; height: 320px; }
+
+/* ---------- 빈 상태 ---------- */
+.gl-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 36px 16px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  font-size: .92rem;
+}
+
+/* ---------- 모달 / 폼 ---------- */
+.gl-modal { border: 0; border-radius: var(--radius); padding: 8px; }
+.gl-modal .modal-title { font-weight: 800; letter-spacing: -.02em; }
+.gl-label { display: block; font-size: .85rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.gl-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: var(--surface);
+  color: var(--ink);
+  box-sizing: border-box;
+  transition: border-color .15s, box-shadow .15s;
+}
+.gl-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.gl-suggest { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.gl-chip {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+.gl-chip:hover { border-color: var(--accent); color: var(--accent-strong); }
+.form-check-input:checked { background-color: var(--accent); border-color: var(--accent); }
+.field-validation-error { color: var(--danger); font-size: .82rem; margin-top: 6px; display: block; }
+
+/* ---------- 푸터 ---------- */
+.gl-footer { color: var(--muted); font-size: .8rem; padding: 24px 16px; text-align: center; }
+
+/* ---------- 반응형 ---------- */
+@media (max-width: 900px) {
+  .gl-dash { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .gl-stat-grid { grid-template-columns: 1fr; gap: 10px; }
+  .gl-title { font-size: 1.4rem; }
+  .gl-page { padding-top: 20px; }
+  .gl-link { padding: 8px 10px; font-size: .85rem; }
+  .gl-brand-text { display: none; }
+  .gl-hide-sm { display: none; }
+  .gl-table th, .gl-table td { padding: 12px 14px; }
 }
