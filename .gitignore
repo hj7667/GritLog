@@ -1,4 +1,31 @@
+# Visual Studio 캐시/설정 폴더
 .vs/
-bin/
-obj/
 *.user
+*.suo
+
+# 빌드 결과물
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+# EF Core 마이그레이션 캐시 (마이그레이션 자체는 커밋 대상이라 제외 아님)
+*.mdf
+*.ldf
+*.ndf
+
+# 로그/임시 파일
+*.log
+*.tmp
+
+# 로컬 전용 설정 (비밀번호/연결문자열이 실제로 들어가는 경우)
+appsettings.Development.json
+
+# OS 관련
+Thumbs.db
+.DS_Store
