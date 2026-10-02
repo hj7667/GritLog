@@ -74,12 +74,35 @@ HabitLog (체크 기록)
 | GET | `/Habit/GetStats` | 통계 데이터 (Ajax) | JSON `{ habitName, rate }[]` |
 
 ## 개발 로드맵
+Phase 1 (거의 다 됨)
 
-- [x] **Phase 1: 기본 골격** — 프로젝트 생성, EF Core 구성, 모델 정의, Migration
-- [ ] **Phase 2: CRUD** — 습관 등록/목록/수정/삭제, 기본 레이아웃
-- [ ] **Phase 3: Ajax 체크 기능** — 체크 토글 API, 연속일수 계산 로직
-- [ ] **Phase 4: 잔디밭 + 통계** — 날짜별 집계 API, 히트맵 View, Chart.js 연동
-- [ ] **Phase 5: 다듬기** — 유효성 검사, UI 스타일링, 예외 처리
+- [x] 프로젝트 생성, EF Core 패키지, SQL Server 인스턴스
+- [x] Habit.cs, HabitLog.cs, AppDbContext.cs
+- [ ] appsettings.json 연결문자열 확인
+- [ ] Program.cs DbContext 등록 확인
+- [ ] Migration 돌리기 (Add-Migration → Update-Database)
+
+Phase 2 (반쯤)
+
+- [x] 모달 폼, 대시보드 View 틀
+- [ ] Controller에 DbContext 연결
+- [ ] Create/Edit/Delete 실제 동작
+- [ ] 가짜 데이터 → 진짜 DB 데이터로 교체
+
+Phase 3
+
+- [ ] 체크박스 Ajax 토글
+- [ ] 연속일수(스트릭) 계산
+
+Phase 4
+
+- [ ] 잔디밭 히트맵
+- [ ] Chart.js 통계
+
+Phase 5
+
+- [ ] 유효성 검사, 스타일링, 예외처리
+
 
 ## 향후 확장
 
