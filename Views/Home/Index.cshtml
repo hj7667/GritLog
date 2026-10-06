@@ -1,15 +1,10 @@
+@model IEnumerable<GritLog.Models.Habit>
+
 @{
     ViewData["Title"] = "대시보드";
-
-    // TODO(Phase 2~3): ViewModel로 교체. 지금은 모양 잡기용 가짜 데이터
-    var habits = new[] {
-        new { Id = 1, Name = "런닝 30분",   Done = true,  Streak = 12 },
-        new { Id = 2, Name = "스쿼트 50개", Done = false, Streak = 4 },
-        new { Id = 3, Name = "플랭크 3분",  Done = true,  Streak = 21 },
-        new { Id = 4, Name = "스트레칭",    Done = false, Streak = 0 },
-    };
-    var monthRate = 72;
-    var bestStreak = 21;
+    var habits = Model.Select(habits => new { habits.Id, habits.Name, Done = false, Streak = 0 }).ToList();
+    var monthRate = 0;
+    var bestStreak = 0;
 }
 
 <div class="gl-page-head">
@@ -47,7 +42,7 @@
             <span class="gl-card-sub">누르면 바로 저장</span>
         </div>
 
-        @if (habits.Length == 0)
+        @if (habits.Count == 0)
         {
             <div class="gl-empty">아직 습관이 없어. 오른쪽 위에서 하나 추가해봐.</div>
         }
