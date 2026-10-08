@@ -1,4 +1,5 @@
 ﻿using GritLog.Data;
+using GritLog.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GritLog.Controllers
@@ -22,7 +23,14 @@ namespace GritLog.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(string name, bool isActive)
         {
-            // TODO: _context.Habits.Add(...); _context.SaveChanges();
+            var habit = new Habit
+            {
+                Name = name,
+                IsActive = isActive,
+                CreatedDate = DateTime.Now
+            };
+            _context.Habits.Add(habit);
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
