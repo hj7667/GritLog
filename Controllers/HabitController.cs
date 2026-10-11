@@ -1,5 +1,6 @@
 ﻿using GritLog.Data;
 using GritLog.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GritLog.Controllers
@@ -39,6 +40,16 @@ namespace GritLog.Controllers
         public IActionResult Edit(int id, string name, bool isActive)
         {
             // TODO: 찾아서 수정 후 저장
+            var habit = _context.Habits.Find(id);
+            if (habit == null) return NotFound();
+
+            var modify = new Habit
+            {
+                Name = name,
+                IsActive = isActive,
+                CreatedDate = DateTime.Now
+            };
+
             return RedirectToAction(nameof(Manage));
         }
 
@@ -46,8 +57,6 @@ namespace GritLog.Controllers
         [ValidateAntiForgeryToken] // 폼에 넣은 위조방지 토큰 검사
         public IActionResult Delete(int id) // 삭제 버튼이 보내준 습관 ID를 받음 
         {
-            // TODO: 찾아서 삭제 (연관 HabitLog 처리)
-            // 1. 
             var habit = _context.Habits.Find(id); // 1. Id로 한 줄 찾기
             if (habit == null) return NotFound(); // 2. 없으면 204
 
