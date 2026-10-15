@@ -2,7 +2,7 @@
 <div class="modal fade" id="habitModal" tabindex="-1" aria-labelledby="habitModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content gl-modal">
-            <form id="habitForm" method="post" action="/Home/Create">
+            <form id="habitForm" method="post" action="/Habit/Create">
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="habitId" name="Id" />
 
@@ -26,6 +26,7 @@
 
                     <div class="form-check form-switch mt-4">
                         <input class="form-check-input" type="checkbox" id="habitActive" name="IsActive" value="true" checked />
+                        <input type="hidden" name="IsActive" value="false" />
                         <label class="form-check-label" for="habitActive">활성화 (오늘 체크리스트에 표시)</label>
                     </div>
                 </div>
